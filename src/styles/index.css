@@ -133,6 +133,13 @@ h6 {
     font-size: var(--step-0);
 }
 
+.line {
+    width: 100%;
+    height: .2rem;
+    background-color: var(--color-lines);
+    margin: 1rem;
+}
+
 /* views */
 
 /*--------------- login------------------ */
@@ -509,8 +516,52 @@ h6 {
     }
 }
 
-.view-inicio {
+.view-inicio-admin {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     color: black;
+
+    p {
+        font-size: 1.5rem;
+        width: 90%;
+        text-align: justify;
+    }
+}
+
+.view-inicio-user {
+    margin: 0 auto;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: black;
+
+    p {
+        font-size: 1.5rem;
+        width: 90%;
+        text-align: justify;
+    }
+}
+
+.contain-logo {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        width: 12rem;
+        height: auto;
+    }
+
+    p {
+        font-weight: 800 !important;
+        text-align: center !important;
+    }
 }
 
 .content-cards {
@@ -518,7 +569,7 @@ h6 {
     width: 80%;
     padding: 4rem;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
 }
 
 .card-icon {
@@ -546,7 +597,6 @@ h6 {
         width: 90%;
         padding: 0;
         border-radius: 109px;
-        background-color: #ffffff;
         box-shadow: .5px .5px .5pxrrgba(0, 0, 0, 0.37);
         margin: 0;
         font-size: 1.5rem;
@@ -561,7 +611,7 @@ h6 {
     span {
         text-align: center;
         width: 100%;
-        font-size: 3rem;
+        font-size: 2.5rem;
         font-family: var(--font-text-p);
     }
 }
@@ -716,6 +766,7 @@ h6 {
     justify-content: center;
     align-items: center;
 }
+
 .labels-form-book {
     font-family: var(--font-components);
     font-size: 1rem;
@@ -740,13 +791,15 @@ h6 {
     padding: 0;
     margin: 0;
 }
-.form-action-book{
+
+.form-action-book {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
 }
-.charts-js{
+
+.charts-js {
     width: 90%;
     height: auto;
     display: flex;
@@ -755,16 +808,18 @@ h6 {
     justify-content: center;
     align-content: center;
 }
-.row-one{
+
+.row-one {
     margin: 0 auto;
-    width:90%;
+    width: 90%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     align-items: center;
 }
-.grapic-card{
+
+.grapic-card {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -772,12 +827,21 @@ h6 {
     width: 35rem;
     height: auto;
 }
-.chart-pie{
+
+.chart-pie {
     padding: 1rem;
     margin: 2rem;
 }
-.view-books{
-    h2{
+
+.view-books {
+    h2 {
         width: auto;
     }
+}
+
+.title-orange {
+    color: var(--color-buttons);
+    text-shadow: 1px 1px 2px var(--color-buttons);
+    font-size: 2rem !important;
+    text-align: center !important;
 }

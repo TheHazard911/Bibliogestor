@@ -6,7 +6,6 @@ import Register from './views/register';
 import Dashboard_admin from './views/dashboard_admin';
 import Navbaradmin from './layouts/nav_admin/navbaradmin';
 import Navbaruser from './layouts/nav_user/navbaruser';
-import Inicio from './views/inicio_admin';
 import Catalogo from './views/catalogo';
 import Usuarios from './views/usuarios';
 import Estadisticas from './views/estadisticas';
@@ -16,6 +15,7 @@ import Perfil from './views/perfil';
 import Favorites_book from './views/favorites_book';
 import Iniciouser from './views/inicio_user';
 import Inicioadmin from './views/inicio_admin';
+import Books_information from './views/books-information';
 
 const AppRoutes = () => {
     return (
@@ -27,13 +27,14 @@ const AppRoutes = () => {
             {/* panel de admin */}
             <Route path="/navadmin" element={<Navbaradmin />}> {/* Usamos una ruta específica para el layout */}
                 <Route index element={<Inicioadmin />} /> {/* Ruta predeterminada */}
-                <Route path="catalogo" element={<Catalogo />} />
+                <Route path="catalogo" element={<Catalogo />}>
+                    <Route path="book/:id" element={<Books_information />} />
+                </Route>
                 <Route path="usuarios" element={<Usuarios />} />
                 <Route path="estadisticas" element={<Estadisticas />} />
                 <Route path="new_book" element={<New_book />} />
                 <Route path="perfil" element={<Perfil />} />
                 <Route path="favorites" element={<Favorites_book />} />
-
             </Route>
             {/* panel de usuario */}
             <Route path="/navuser" element={<Navbaruser />}> {/* Usamos una ruta específica para el layout */}

@@ -44,8 +44,8 @@ function Navbaruser() {
                             </Link>
                         </li>
                         <li>
-                            <Link to="usuarios">
-                                <i class="bi bi-people"></i>
+                            <Link to="perfil">
+                                <i class="bi bi-person"></i>
                             </Link>
                         </li>
                         <li>
