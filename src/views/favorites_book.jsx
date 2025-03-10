@@ -1,9 +1,8 @@
-import React from 'react'
-
 function Favorites_book() {
     return (
         <>
             <div className="views">
+                <h1 className="">hola</h1>
             </div>
         </>
     )

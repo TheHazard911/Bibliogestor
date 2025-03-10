@@ -1,50 +1,45 @@
-import React from 'react'
-import Cards_books from '../components/cards/cards_books'
-import book from "../assets/imgs/books/book_1.jpeg"
-import book_2 from "../assets/imgs/books/book_2.jpeg"
-import book_3 from "../assets/imgs/books/book_3.jpeg"
+import Cards_books from "../components/cards/cards_books";
+import LibrosSimulados from "../data/json/librosimulados";
+
 function Catalogo() {
+  const librosPorGenero = genero =>
+    LibrosSimulados.filter(libro => libro.genero === genero);
+
   return (
-    <div className='views view-catalogo'>
-      <h2>Catalogo</h2>
+    <div className="views view-catalogo">
+      <h2>Catálogo</h2>
       <div className="content-catalogo">
-        <section className='title-genero'>
-        <h3>terror</h3>
+        <section className="title-genero">
+          <h3>Terror</h3>
         </section>
         <section className="row-cards">
-          <Cards_books book={book}></Cards_books>
-          <Cards_books book={book}></Cards_books>
-          <Cards_books book={book}></Cards_books>
-          <Cards_books book={book}></Cards_books>
-          <Cards_books book={book}></Cards_books>
+          {librosPorGenero("terror").map(libro =>
+            <Cards_books key={libro.id} book={libro} />
+          )}
         </section>
       </div>
       <div className="content-catalogo">
-        <section className='title-genero'>
-        <h3>Comedia</h3>
+        <section className="title-genero">
+          <h3>Comedia</h3>
         </section>
         <section className="row-cards">
-          <Cards_books book={book_2}></Cards_books>
-          <Cards_books book={book_2}></Cards_books>
-          <Cards_books book={book_2}></Cards_books>
-          <Cards_books book={book_2}></Cards_books>
-          <Cards_books book={book_2}></Cards_books>
+          {librosPorGenero("comedia").map(libro =>
+            <Cards_books key={libro.id} book={libro} />
+          )}
         </section>
       </div>
       <div className="content-catalogo">
-        <section className='title-genero'>
-        <h3>ficcion</h3>
+        <section className="title-genero">
+          <h3>Ficción</h3>
         </section>
         <section className="row-cards">
-          <Cards_books book={book_3}></Cards_books>
-          <Cards_books book={book_3}></Cards_books>
-          <Cards_books book={book_3}></Cards_books>
-          <Cards_books book={book_3}></Cards_books>
-          <Cards_books book={book_3}></Cards_books>
+          {librosPorGenero("ficcion").map(libro =>
+            <Cards_books key={libro.id} book={libro} />
+          )}
         </section>
       </div>
     </div>
-  )
+  );
 }
 
-export default Catalogo
+export default Catalogo;
