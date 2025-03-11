@@ -1,4 +1,0 @@
-{
-  "admin@gmail.com": { "password": "12345", "isAdmin": true },
-  "user@gmail.com": { "password": "12345", "isAdmin": false }
-}

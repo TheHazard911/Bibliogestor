@@ -9,9 +9,9 @@ import Usuarios from "./views/usuarios";
 import Estadisticas from "./views/estadisticas";
 import New_book from "./views/new_book";
 import Recovery_password from "./views/recovery_password";
-import Perfil from "./views/perfil";
+import Perfil from "./views/perfil";  
 import Favorites_book from "./views/favorites_book";
-import Inicioadmin from "./views/inicio_admin";
+import Inicio from "./views/inicio";
 import Books_information from "./views/books_information";
 
 const AppRoutes = () => {
@@ -23,7 +23,7 @@ const AppRoutes = () => {
       <Route path="/dashboard" element={<Dashboard_admin />} />
       {/* panel de admin */}
       <Route path="/nav" element={<Navbar />}>
-        <Route index element={<Inicioadmin />} /> {/* Ruta predeterminada */}
+        <Route index element={<Inicio />} /> {/* Ruta predeterminada */}
         <Route path="catalogo" element={<Catalogo />} />
         <Route path="usuarios" element={<Usuarios />} />
         <Route path="estadisticas" element={<Estadisticas />} />

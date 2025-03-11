@@ -1,21 +1,30 @@
 import { create } from "zustand";
-import datauser from "../data/json/datosuser.json";
+import { persist } from "zustand/middleware";
+import { Users } from "../data/json/datosuser";
 
-const useAuthStore = create((set) => ({
-  user: null,
-  isAdmin: false,
+const useAuthStore = create(
+  persist(
+    (set) => ({
+      user: null,
+      isAdmin: false,
 
-  login: (email, password) => {
-    const users = datauser;
+      login: (email, password) => {
+        const users = Users;
 
-    if (users[email] && users[email].password === password) {
-      set({ user: email, isAdmin: users[email].isAdmin });
-      return true;
+        if (users[email] && users[email].password === password) {
+          set({ user: email, isAdmin: users[email].isAdmin });
+          return true;
+        }
+        return false;
+      },
+
+      logout: () => set({ user: null, isAdmin: false })
+    }),
+    {
+      name: "auth-storage", // Nombre del almacenamiento en localStorage
+      getStorage: () => localStorage // Usa localStorage para persistencia
     }
-    return false;
-  },
-
-  logout: () => set({ user: null, isAdmin: false })
-}));
+  )
+);
 
 export default useAuthStore;
