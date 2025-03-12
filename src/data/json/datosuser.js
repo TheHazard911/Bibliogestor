@@ -1,92 +1,78 @@
-export const Users = {
-  "admin@gmail.com": { "password": "12345", "isAdmin": true },
-  "user@gmail.com": { "password": "12345", "isAdmin": false }
-};
-
 export const Data = [
   {
     id: 1,
-    nombres: "Mark",
-    apellidos: "Otto",
-    cedula: "1234",
+    nombres: "Admin",
+    apellidos: "Principal",
+    cedula: "000000",
     genero: "Masculino",
-    correo: "mark.otto@gmail.com",
-    fechaNacimiento: "01/01/1999",
-    librosPrestados: 11
+    correo: "admin.123@gmail.com",
+    fechaNacimiento: "01/01/0001",
+    librosPrestados: 0,
+    librosLeidos: 10,
+    sanciones: 0,
+    password: "123456",
+    pregunta_seguridad: "comida favorita",
+    respuesta_seguridad: "pizza"
   },
   {
     id: 2,
-    nombres: "John",
-    apellidos: "Doe",
-    cedula: "5678",
+    nombres: "jose",
+    apellidos: "Otto",
+    cedula: "1234",
     genero: "Masculino",
-    correo: "john.doe@gmail.com",
-    fechaNacimiento: "02/02/2000",
-    librosPrestados: 54
+    correo: "mark.jose@gmail.com",
+    fechaNacimiento: "11/02/1999",
+    librosPrestados: 20,
+    librosLeidos: 7,
+    sanciones: 1,
+    password: "123456",
+    pregunta_seguridad: "comida favorita",
+    respuesta_seguridad: "arepas"
   },
   {
     id: 3,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
-    genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
-  ,
+    nombres: "Mark antonio",
+    apellidos: "Otto salas",
+    cedula: "123467",
+    genero: "Masculino",
+    correo: "markantonio@gmail.com",
+    fechaNacimiento: "01/05/1999",
+    librosPrestados: 11,
+    librosLeidos: 4,
+    sanciones: 1,
+    password: "12345",
+    pregunta_seguridad: "comida favorita",
+    respuesta_seguridad: "hamburguesa"
+  },
   {
     id: 4,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
-    genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
-  ,
+    nombres: "Francisco jose",
+    apellidos: "prada",
+    cedula: "123",
+    genero: "Masculino",
+    correo: "franciscojose@gmail.com",
+    fechaNacimiento: "20/20/1968",
+    librosPrestados: 2,
+    librosLeidos: 3,
+    sanciones: 1,
+    password: "123456789",
+    pregunta_seguridad: "libro favorito",
+    respuesta_seguridad: "harry potter saga 1"
+  },
   {
     id: 5,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
+    nombres: "maria jose",
+    apellidos: "fuentes prada",
+    cedula: "12345678",
     genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
-  ,
-  {
-    id: 6,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
-    genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
-  ,
-  {
-    id: 7,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
-    genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
-  ,
-  {
-    id: 8,
-    nombres: "Jane",
-    apellidos: "Smith",
-    cedula: "9876",
-    genero: "Femenino",
-    correo: "jane.smith@gmail.com",
-    fechaNacimiento: "03/03/1995",
-    librosPrestados: 100
-  }
+    correo: "mariaantonia@gmail.com",
+    fechaNacimiento: "05/02/2005",
+    librosPrestados: 10,
+    sanciones: 1,
+    librosLeidos: 2,
+    password: "12345",
+    pregunta_seguridad: "ciudad favorita",
+    respuesta_seguridad: "tokio"
+  },
+
 ];

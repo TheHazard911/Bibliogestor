@@ -1,5 +1,5 @@
 import React from 'react'
-import Pie from '../components/charts/pie'
+import Bar_2 from '../components/charts/bar_2'
 import Bar from '../components/charts/bar'
 
 function Estadisticas() {
@@ -14,7 +14,7 @@ function Estadisticas() {
           </div>
           <div className="grapic-card">
             <h3>Usuarios</h3>
-          <Pie></Pie>
+          <Bar_2></Bar_2>
           </div>
         </section>
       </div>

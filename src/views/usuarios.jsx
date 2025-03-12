@@ -1,21 +1,37 @@
 import React, { useState } from "react";
 import { Data } from "../data/json/datosuser";
 import DeleteuserModal from "../components/modals/delete_user";
+import EdituserModal from "../components/modals/edit_user";
 
 function Usuarios() {
   const [isDeleteOpen, setDeleteOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState(null); // Guarda el usuario a eliminar
+  const [selectedUser, setSelectedUser] = useState(null); // Usuario a eliminar
 
-  // Abre la modal con el usuario seleccionado
+  const [isEditOpen, setEditOpen] = useState(false);
+  const [selectedEdit, setSelectedEdit] = useState(null); // Usuario a editar
+
+  // Abre la modal de eliminar
   const openDeleteModal = (usuario) => {
     setSelectedUser(usuario);
     setDeleteOpen(true);
   };
 
-  // Cierra la modal y resetea el usuario seleccionado
+  // Cierra la modal de eliminar
   const closeDeleteModal = () => {
     setDeleteOpen(false);
     setSelectedUser(null);
+  };
+
+  // Abre la modal de editar
+  const openEditModal = (usuario) => {
+    setSelectedEdit(usuario);
+    setEditOpen(true);
+  };
+
+  // Cierra la modal de editar
+  const closeEditModal = () => {
+    setEditOpen(false);
+    setSelectedEdit(null);
   };
 
   // Acción cuando se confirma la eliminación
@@ -54,7 +70,10 @@ function Usuarios() {
                 <td>{usuario.fechaNacimiento}</td>
                 <td>{usuario.librosPrestados}</td>
                 <td>
-                  <button className="btn btn-primary">
+                  <button 
+                    onClick={() => openEditModal(usuario)}
+                    className="btn btn-primary"
+                  >
                     <i className="bi bi-pencil-fill"></i>
                   </button>
                   <button
@@ -69,12 +88,20 @@ function Usuarios() {
           </tbody>
         </table>
       </section>
+
       {/* Modal para eliminar */}
       <DeleteuserModal
         isOpen={isDeleteOpen}
         onClose={closeDeleteModal}
         onConfirm={handleDelete}
         user={selectedUser}
+      />
+
+      {/* Modal para editar */}
+      <EdituserModal
+        isOpen={isEditOpen}
+        onClose={closeEditModal}
+        user={selectedEdit}
       />
     </div>
   );

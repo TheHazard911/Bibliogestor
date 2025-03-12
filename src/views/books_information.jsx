@@ -73,7 +73,7 @@ function Books_information() {
           <article className="row-buttons">
             {isAdmin && (
               <>
-              <button className="btn btn-color" id="btn-edit">
+              <button className="btn btn-color" id="btn-edit" onClick={() => setEditOpen(true)}>
               Editar
             </button>
             <button

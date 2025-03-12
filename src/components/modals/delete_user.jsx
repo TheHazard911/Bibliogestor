@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import Logo from "../../assets/imgs/Logo_BiblioGestor.png";
 
-function DeleteuserModal({ isOpen, onClose, onConfirm, bookTitle }) {
+function DeleteuserModal({ isOpen, onClose, onConfirm }) {
   return (
     <div
       className={`modal fade ${isOpen ? "show d-block" : ""}`}
@@ -23,11 +23,11 @@ function DeleteuserModal({ isOpen, onClose, onConfirm, bookTitle }) {
               onClick={onClose}
             />
             <img className="modal-image" src={Logo} alt="Logo" />
-            <h5 className="modal-title">Eliminar Libro</h5>
+            <h5 className="modal-title">Eliminar Usuario</h5>
           </div>
           <div className="modal-body">
             <p>
-              ¿Estás seguro de que deseas eliminar el libro?
+              ¿Estás seguro de que deseas eliminar el usuario?
             </p>
             <form className="form-leed-book">
               <div className="position-form-books-leed">

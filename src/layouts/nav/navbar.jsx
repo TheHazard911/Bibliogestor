@@ -4,15 +4,16 @@ import Footer from '../footer/footer';
 import useAuthStore from "../../store/authstore"; // Importamos Zustand
 
 function Navbar() {
-    const navigate = useNavigate(); // Hook para redirigir
-    const { user, isAdmin, logout } = useAuthStore(); // Obtenemos el estado de Zustand
+    const navigate = useNavigate();
+    const { user, isAdmin, logout } = useAuthStore();
 
     const handleLogout = () => {
-        logout(); // Cierra sesión
-        navigate("/"); // Redirige a la página de inicio
+        logout();
+        navigate("/");
     };
 
     return (
+        // Navbar
         <>
             <header className='header'>
                 <section className='header-logo'>
@@ -23,7 +24,7 @@ function Navbar() {
                 </section>
                 <section className="header-info">
                     <div className="user-info">
-                        <p>Bienvenido, {user || "Invitado"}</p>
+                        <p>Bienvenido, {user ? `${user.nombres} ${user.apellidos}` : "Invitado"}</p>
                     </div>
                     <div className="click-info">
                         <a href="#"><i className="bi bi-question-circle"></i></a>
@@ -44,7 +45,7 @@ function Navbar() {
                             <Link to="favorites"><i className="bi bi-bookmark-heart"></i></Link>
                         </li>
 
-                        {isAdmin && ( // Solo los admins pueden ver estos botones
+                        {isAdmin && (
                             <>
                                 <li>
                                     <Link to="usuarios"><i className="bi bi-people"></i></Link>

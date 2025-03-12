@@ -1,22 +1,21 @@
-import React from 'react'
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
-function Pie() {
+export default function Bar_2() {
     const chartRef = useRef(null);
 
     useEffect(() => {
         const ctx = chartRef.current.getContext('2d');
 
-        // Crear el gráfico
         const myChart = new Chart(ctx, {
-            type: 'pie', // Cambia esto al tipo de gráfico que desees
+            type: 'pie',
             data: {
                 labels: ['Prestados', 'Totales', 'Disponibles'],
                 datasets: [
                     {
                         label: 'Estado de Libros',
-                        data: [12, 19, 10],
+                        data: [10, 20, 50],
                         backgroundColor: [
                             'rgba(255, 99, 132, 1)',
                             'rgba(54, 162, 235, 1)',
@@ -32,21 +31,33 @@ function Pie() {
                 ],
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'black',
+                            font: {
+                                size: 16,
+                            },
+                        },
+                    },
+                    datalabels: {
+                        color: 'white',
+                        font: {
+                            size: 16,
+                        },
+                        anchor: 'center',
+                        align: 'center',
                     },
                 },
             },
+            plugins: [ChartDataLabels]
         });
 
-        // Limpiar el gráfico al desmontar el componente
         return () => {
             myChart.destroy();
         };
     }, []);
 
-    return <canvas ref={chartRef} className='chart-pie'/>;
+    return <canvas ref={chartRef} className='chart-pie' />;
 }
 
-export default Pie

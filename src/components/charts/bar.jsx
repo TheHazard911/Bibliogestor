@@ -1,6 +1,6 @@
-import React from 'react'
-import { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 function Bar() {
     const chartRef = useRef(null);
@@ -8,9 +8,8 @@ function Bar() {
     useEffect(() => {
         const ctx = chartRef.current.getContext('2d');
 
-        // Crear el gráfico
         const myChart = new Chart(ctx, {
-            type: 'bar', // Cambia esto al tipo de gráfico que desees
+            type: 'pie',
             data: {
                 labels: ['Prestados', 'Totales', 'Disponibles'],
                 datasets: [
@@ -32,21 +31,34 @@ function Bar() {
                 ],
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true,
+                plugins: {
+                    legend: {
+                        labels: {
+                            color: 'black',
+                            font: {
+                                size: 18,
+                            },
+                        },
+                    },
+                    datalabels: {
+                        color: 'white',
+                        font: {
+                            size: 22,
+                        },
+                        anchor: 'center',
+                        align: 'center',
                     },
                 },
             },
+            plugins: [ChartDataLabels]
         });
 
-        // Limpiar el gráfico al desmontar el componente
         return () => {
             myChart.destroy();
         };
     }, []);
 
-    return <canvas ref={chartRef} className='chart-bar' />;
+    return <canvas ref={chartRef} className='chart-pie' />;
 }
 
-export default Bar
+export default Bar;

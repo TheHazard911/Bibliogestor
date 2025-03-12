@@ -1,6 +1,17 @@
+import { useForm } from "react-hook-form";
 import icon_bibliogestor from "../../assets/imgs/Logo_Bibliogestor.png";
 
 function Form_new_book() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+  };
+
   return (
     <div className="form-book">
       <section className="image-form-register">
@@ -9,7 +20,7 @@ function Form_new_book() {
       <section className="title-form-book">
         <h2>Agregar libro | Datos del libro</h2>
       </section>
-      <form className="form-action-book">
+      <form className="form-action-book" onSubmit={handleSubmit(onSubmit)}>
         <div className="position-form-books">
           <section className="form-books-inputs">
             <div className="mb-3">
@@ -18,59 +29,56 @@ function Form_new_book() {
                 placeholder="Nombre Libro"
                 type="text"
                 className="form-control inputs-form-book"
-                id=""
-                aria-describedby=""
+                {...register("nombre", { required: "El nombre es obligatorio" })}
               />
+              {errors.nombre && <p className="error-message">{errors.nombre.message}</p>}
               <br />
               <label className="form-label labels-form-book">Autor:</label>
               <input
                 placeholder="Autor Libro"
                 type="text"
                 className="form-control inputs-form-book"
-                id="exampleInputPassword1"
+                {...register("autor", { required: "El autor es obligatorio" })}
               />
+              {errors.autor && <p className="error-message">{errors.autor.message}</p>}
               <br />
-              <label className="form-label labels-form-book">Genero:</label>
+              <label className="form-label labels-form-book">Género:</label>
               <input
-                placeholder="Genero-libro"
+                placeholder="Género Libro"
                 type="text"
                 className="form-control inputs-form-book"
-                id="exampleInputPassword1"
+                {...register("genero", { required: "El género es obligatorio" })}
               />
+              {errors.genero && <p className="error-message">{errors.genero.message}</p>}
             </div>
           </section>
           <section className="form-register-inputs">
             <div className="mb-3">
-              <label className="form-label labels-form-book">
-                Imagen de Portada:
-              </label>
+              <label className="form-label labels-form-book">Imagen de Portada:</label>
               <input
-                placeholder="Portada"
                 type="file"
                 className="form-control inputs-form-book"
-                id=""
-                aria-describedby=""
+                {...register("portada", { required: "La imagen es obligatoria" })}
               />
+              {errors.portada && <p className="error-message">{errors.portada.message}</p>}
               <br />
-              <label className="form-label labels-form-book">Categoria:</label>
+              <label className="form-label labels-form-book">Categoría:</label>
               <input
-                placeholder="Nombrar Categoria"
+                placeholder="Nombrar Categoría"
                 type="text"
                 className="form-control inputs-form-book"
-                id=""
-                aria-describedby=""
+                {...register("categoria", { required: "La categoría es obligatoria" })}
               />
+              {errors.categoria && <p className="error-message">{errors.categoria.message}</p>}
               <br />
-              <label className="form-label labels-form-book">
-                Ingresar Descripcion:
-              </label>
+              <label className="form-label labels-form-book">Ingresar Descripción:</label>
               <input
-                placeholder="Descripcion"
+                placeholder="Descripción"
                 type="text"
                 className="form-control inputs-form-book"
-                id=""
-                aria-describedby=""
+                {...register("descripcion", { required: "La descripción es obligatoria" })}
               />
+              {errors.descripcion && <p className="error-message">{errors.descripcion.message}</p>}
             </div>
           </section>
         </div>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Users } from "../data/json/datosuser";
+import { Data } from "../data/json/datosuser";
 
 const useAuthStore = create(
   persist(
@@ -9,10 +9,10 @@ const useAuthStore = create(
       isAdmin: false,
 
       login: (email, password) => {
-        const users = Users;
-
-        if (users[email] && users[email].password === password) {
-          set({ user: email, isAdmin: users[email].isAdmin });
+        const foundUser = Data.find(user => user.correo === email && user.password === password);
+        
+        if (foundUser) {
+          set({ user: foundUser, isAdmin: foundUser.correo === "admin.123@gmail.com" });
           return true;
         }
         return false;
@@ -21,8 +21,8 @@ const useAuthStore = create(
       logout: () => set({ user: null, isAdmin: false })
     }),
     {
-      name: "auth-storage", // Nombre del almacenamiento en localStorage
-      getStorage: () => localStorage // Usa localStorage para persistencia
+      name: "auth-storage", // Guarda en localStorage
+      getStorage: () => localStorage
     }
   )
 );

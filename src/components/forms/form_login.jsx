@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useNavigate, Link } from "react-router-dom";
 import useAuthStore from "../../store/authstore"; // Importamos el store de Zustand
 import icon_bibliogestor from "../../assets/imgs/Logo_Bibliogestor.png";
@@ -7,12 +7,13 @@ function Form_login() {
   const navigate = useNavigate();
   const { login } = useAuthStore(); // Obtenemos login desde Zustand
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  const handleSubmit = event => {
-    event.preventDefault(); // Evita el comportamiento predeterminado del formulario
-
+  const onSubmit = ({ email, password }) => {
     if (login(email, password)) {
       navigate("/nav"); // Redirige si el login es exitoso
     } else {
@@ -29,7 +30,7 @@ function Form_login() {
         <h1>Iniciar Sesión</h1>
       </section>
       <section className="form-login-inputs">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-3">
             <label htmlFor="email" className="form-label labels-form">
               Correo:
@@ -39,10 +40,12 @@ function Form_login() {
               type="email"
               className="form-control inputs-form"
               id="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
+              {...register("email", { required: "El correo es obligatorio" })}
             />
+            {errors.email && <p className="error-message">{errors.email.message}</p>}
+            
             <br />
+
             <label htmlFor="password" className="form-label labels-form">
               Contraseña:
             </label>
@@ -51,18 +54,18 @@ function Form_login() {
               type="password"
               className="form-control inputs-form"
               id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
+              {...register("password", { required: "La contraseña es obligatoria" })}
             />
+            {errors.password && <p className="error-message">{errors.password.message}</p>}
+            
             <br />
+
             <Link to="/register">
               <label className="form-label labels-form-two">Crear Cuenta</label>
             </Link>
             <br />
             <Link to="/recovery">
-              <label className="form-label labels-form-two">
-                Recuperar Cuenta
-              </label>
+              <label className="form-label labels-form-two">Recuperar Cuenta</label>
             </Link>
           </div>
           <button type="submit" className="btn btn-color">
