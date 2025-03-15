@@ -13,11 +13,13 @@ import Perfil from "./views/perfil";
 import Favorites_book from "./views/favorites_book";
 import Inicio from "./views/inicio";
 import Books_information from "./views/books_information";
+import Blog from "./views/blog";
 
 const AppRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<Login />} />
+      <Route path="/" element={<Blog />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/recovery" element={<Recovery_password />} />
       <Route path="/dashboard" element={<Dashboard_admin />} />

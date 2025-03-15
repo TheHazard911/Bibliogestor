@@ -7,7 +7,7 @@ function Footer() {
                 <section className="footer-info">
                     <article className='content-footer-one'>
                         <h5>Acerca De</h5>
-                        <p>Aca va un texto de explicacion del programa acuedos etc etc</p>
+                        <p>Bibliogestor, una libreria con un amplio catalogo para todos nuestros usuarios.</p>
                     </article>
                     <article className='content-footer-two'>
                         <h5>Desarrolladores</h5>

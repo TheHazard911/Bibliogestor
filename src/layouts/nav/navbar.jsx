@@ -9,7 +9,7 @@ function Navbar() {
 
     const handleLogout = () => {
         logout();
-        navigate("/");
+        navigate("/login");
     };
 
     return (
@@ -41,9 +41,9 @@ function Navbar() {
                         <li>
                             <Link to="catalogo"><i className="bi bi-book"></i></Link>
                         </li>
-                        <li>
+                        {/* <li>
                             <Link to="favorites"><i className="bi bi-bookmark-heart"></i></Link>
-                        </li>
+                        </li> */}
 
                         {isAdmin && (
                             <>

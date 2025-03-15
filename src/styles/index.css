@@ -156,7 +156,44 @@ i {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
+
+.link-to-house {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  align-content: center;
+  justify-content: flex-start;
+}
+
+.item-nav-login {
+  display: flex;
+  justify-content: start;
+  align-items: flex-start;
+  align-content: center;
+  flex-direction: column;
+  margin: 0;
+  padding: 0.5rem;
+  width: 100%;
+  height: auto;
+  color: white;
+  margin-left: 1rem;
+
+  li {
+    font-size: 2.5rem;
+    margin: 1rem 0;
+    color: white;
+  }
+
+  li:hover {
+    transform: scale(1.1);
+    color: var(--color-buttons-hover);
+    transition: all 0.1s ease-in-out;
+  }
+
+}
+
 
 .form-login {
   width: 35%;
@@ -583,6 +620,7 @@ i {
   padding: 4rem;
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .card-icon {
@@ -1080,5 +1118,126 @@ i {
     color: black;
     font-size: 1.2rem;
     margin: 0;
+  }
+}
+
+.view-blog {
+  width: 100%;
+  background-color: var(--color-footer);
+  font-family: var(--font-text-p);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  margin: 0 auto;
+
+  h2 {
+    border: none;
+  }
+}
+
+.span-orange {
+  color: var(--color-buttons);
+}
+
+.section-blog {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 90%;
+  font-family: var(--font-titles-h);
+
+  img {
+    width: 20rem;
+    height: auto;
+  }
+
+  h1 {
+    width: 50%;
+    text-align: start;
+  }
+}
+
+.section-blog-buttons {
+  width: 60%;
+}
+
+.column-contain-blog {
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.components-information-blog {
+  width: 100%;
+  padding: 5rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-image: var(--image-login);
+  background-attachment: fixed;
+  flex-wrap: wrap;
+}
+
+.cards-blog {
+  margin: 1rem;
+  width: 18rem;
+  min-height: 20rem;
+  background-color: rgb(250, 250, 250);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  box-shadow: .5px .5px 10px black;
+
+  p {
+    text-align: center;
+    width: 60%;
+    padding: 0;
+    margin: 0;
+    font-size: 2rem;
+    font-family: var(--font-titles-h);
+
+    i {
+      color: var(--color-lines);
+      font-size: 5rem;
+    }
+  }
+}
+.views-favorite-book{
+  color: black;
+}
+
+@media (max-width: 425px) {
+  .form-login {
+    width: 75%;
+  }
+
+  .view-inicio-admin {
+    margin: 0;
+  }
+
+  .header {
+    width: 100%;
+  }
+  .header-logo{
+  width: 20%;
+    img{
+      width: 5rem;
+    }
+  }
+  .header-title {
+    p {
+
+      font-size: 1rem;
+    }
   }
 }
