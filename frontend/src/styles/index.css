@@ -1051,6 +1051,10 @@ i {
 .modal-footer {
   display: flex;
   justify-content: center;
+  width: 100%;
+  button{
+    width: auto;
+  }
 }
 
 .form-leed-book {
@@ -1231,10 +1235,11 @@ i {
 }
 
 .modal-content {
+  margin: 0 auto;
   background: white;
   padding: 20px;
   border-radius: 8px;
-  width: 300px;
+  width: 80%;
   text-align: center;
 }
 
