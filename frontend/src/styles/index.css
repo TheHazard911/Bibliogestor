@@ -1,7 +1,8 @@
 /* src/styles/fonts.css */
 @font-face {
   font-family: "InstrumentSansBold";
-  src: url("../assets/fonts/Instrument_Sans/InstrumentSans-Bold.ttf") format("truetype");
+  src: url("../assets/fonts/Instrument_Sans/InstrumentSans-Bold.ttf")
+    format("truetype");
   font-weight: normal;
   font-style: normal;
 }
@@ -191,9 +192,7 @@ i {
     color: var(--color-buttons-hover);
     transition: all 0.1s ease-in-out;
   }
-
 }
-
 
 .form-login {
   width: 35%;
@@ -1089,7 +1088,6 @@ i {
 }
 
 .view-profile {
-
   color: black;
 }
 
@@ -1200,7 +1198,7 @@ i {
   align-items: center;
   justify-content: center;
   color: black;
-  box-shadow: .5px .5px 10px black;
+  box-shadow: 0.5px 0.5px 10px black;
 
   p {
     text-align: center;
@@ -1216,7 +1214,7 @@ i {
     }
   }
 }
-.views-favorite-book{
+.views-favorite-book {
   color: black;
 }
 
@@ -1278,7 +1276,28 @@ i {
   border-radius: 5px;
   cursor: not-allowed;
 }
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 10rem;
+  height: 10rem;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex !important; /* Asegurar que se muestra */
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
 
+.modal {
+  display: none;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+  z-index: 1001;
+  /* display: block !important; Asegurar que se muestra */
+}
 
 
 @media (max-width: 425px) {
@@ -1293,15 +1312,14 @@ i {
   .header {
     width: 100%;
   }
-  .header-logo{
-  width: 20%;
-    img{
+  .header-logo {
+    width: 20%;
+    img {
       width: 5rem;
     }
   }
   .header-title {
     p {
-
       font-size: 1rem;
     }
   }
