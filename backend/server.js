@@ -370,6 +370,25 @@ app.get("/perfil/:id", async (req, res) => {
   }
 });
 
+app.put("/libros/:id", async (req, res) => {
+  const { id } = req.params;
+  const { titulo, autor_id, descripcion, categoria, disponible, imagen_url } =
+    req.body;
+
+  try {
+    await db.run(
+      `UPDATE libros SET titulo = ?, autor_id = ?, descripcion = ?, categoria = ?, disponible = ?, imagen_url = ?
+       WHERE id = ?`,
+      [titulo, autor_id, descripcion, categoria, disponible, imagen_url, id]
+    );
+
+    res.json({ mensaje: "Libro actualizado correctamente" });
+  } catch (error) {
+    console.error("Error al actualizar libro:", error);
+    res.status(500).json({ mensaje: "Error al actualizar libro" });
+  }
+});
+
 // ✅ Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
