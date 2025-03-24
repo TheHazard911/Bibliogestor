@@ -44,6 +44,9 @@ function Navbar() {
                         <li>
                             <Link to="favorites"><i className="bi bi-bookmark-heart"></i></Link>
                         </li>
+                        <li>
+                            <Link to="leidos"><i className="bi bi-bookmark-heart"></i></Link>
+                        </li>
 
                         {isAdmin && (
                             <>

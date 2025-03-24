@@ -11,6 +11,7 @@ import New_book from "./views/new_book";
 import Recovery_password from "./views/recovery_password";
 import Perfil from "./views/perfil";
 import Favorites_book from "./views/favorites_book";
+import Read_books from "./views/leidos";
 import Inicio from "./views/inicio";
 import Books_information from "./views/books_information";
 import Blog from "./views/blog";
@@ -35,6 +36,7 @@ const AppRoutes = () => {
           <Route path="new_book" element={<New_book />} />
           <Route path="perfil" element={<Perfil />} />
           <Route path="favorites" element={<Favorites_book />} />
+          <Route path="leidos" element={<Read_books />} />
           <Route path="catalogo/book/:id" element={<Books_information />} />
         </Route>
       </Route>

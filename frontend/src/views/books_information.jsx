@@ -69,7 +69,7 @@ function Books_information() {
         // console.log("Fecha actual:", hoy);
         // console.log("Días restantes:", diasRestantes);
 
-        if (diasRestantes <= 7 && diasRestantes > 0) {
+        if (diasRestantes <= 8 && diasRestantes > 0) {
           setMensajeDevolucion(
             "⚠️ La fecha de devolución está próxima: " + data.fecha_devolucion
           );
@@ -93,8 +93,7 @@ function Books_information() {
   }, [fetchLibro]);
 
   // 📌 Función para tomar prestado el libro
-  const tomarPrestado = async () => {
-    // console.log(libro.fecha_devolucion)
+  const tomarPrestado = async ({ loanDate, returnDate, bookId }) => {
     try {
       const response = await fetch("http://localhost:5000/prestamos", {
         method: "POST",
@@ -103,9 +102,9 @@ function Books_information() {
         },
         body: JSON.stringify({
           usuario_id: user.id,
-          libro_id: libro.id,
-          fecha_prestamo: new Date().toISOString().split("T")[0], // Fecha actual
-          fecha_devolucion: libro.fecha_devolucion,
+          libro_id: bookId,
+          fecha_prestamo: loanDate, // Fecha ingresada en el formulario
+          fecha_devolucion: returnDate, // Fecha de devolución ingresada
         }),
       });
 
@@ -173,15 +172,11 @@ function Books_information() {
   };
 
   const handleEditClick = (book) => {
-    console.log("📖 Libro seleccionado para editar:", book);
+    // console.log("📖 Libro seleccionado para editar:", book);
     setSelectedBook(book);
     setIsEditOpen(true);
-    console.log("🔍 Estado de isEditOpen:", isEditOpen); // 🚀 Depuración
+    // console.log("🔍 Estado de isEditOpen:", isEditOpen); // 🚀 Depuración
   };
-
-  useEffect(() => {
-    console.log("🟢 Estado de isEditOpen cambió:", isEditOpen);
-  }, [isEditOpen]);
 
   // 📌 Cargar lista de autores al montar el componente
   useEffect(() => {
@@ -292,10 +287,11 @@ function Books_information() {
       <LeedBookModal
         isOpen={isLeedOpen}
         onClose={() => setLeedOpen(false)}
-        onConfirm={tomarPrestado} // Llama a tomarPrestado()
+        onConfirm={tomarPrestado} // ✅ Pasamos la función corregida
         bookTitle={libro.titulo}
         bookId={libro.id}
       />
+
       {isEditOpen && selectedBook && (
         <EditBookModal
           book={selectedBook}
