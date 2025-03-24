@@ -412,6 +412,52 @@ app.get("/lecturas/:usuario_id", async (req, res) => {
   }
 });
 
+app.get("/estadisticas", async (req, res) => {
+  try {
+    // Contar el total de libros
+    const totalLibrosResult = await dbGet(
+      "SELECT COUNT(*) as total FROM libros"
+    );
+    const totalLibros = totalLibrosResult.total || 0;
+
+    // Contar los libros prestados (devuelto = false)
+    const librosPrestadosResult = await dbGet(
+      "SELECT COUNT(*) as prestados FROM prestamos WHERE devuelto = FALSE"
+    );
+    const librosPrestados = librosPrestadosResult.prestados || 0;
+
+    // Libros disponibles (totales - prestados)
+    const librosDisponibles = totalLibros - librosPrestados;
+
+    res.json({
+      totalLibros,
+      librosPrestados,
+      librosDisponibles,
+    });
+  } catch (error) {
+    console.error("Error obteniendo estadísticas:", error);
+    res.status(500).json({ mensaje: "Error obteniendo estadísticas" });
+  }
+});
+
+app.get("/usuarios_estadisticas", async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+      (SELECT COUNT(*) FROM usuarios WHERE bloqueado = 1) AS bloqueados,
+      (SELECT COUNT(*) FROM usuarios WHERE email = 'admin123@gmail.com') AS administradores,
+      (SELECT COUNT(*) FROM usuarios WHERE bloqueado = 0 AND email <> 'admin123@gmail.com') AS activos
+    `;
+
+    const result = await dbGet(query); // Usamos dbGet para obtener UNA SOLA fila
+    // console.log("📊 Estadísticas:", result);
+    res.json(result);
+  } catch (error) {
+    console.error("❌ Error obteniendo estadísticas:", error.message);
+    res.status(500).json({ error: "Error en el servidor" });
+  }
+});
+
 // ✅ Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);
