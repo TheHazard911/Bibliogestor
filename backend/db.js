@@ -1,24 +1,35 @@
 const sqlite3 = require("sqlite3").verbose();
 const path = require("path");
 
-// Ruta de la base de datos SQLite
+// Ruta absoluta de la base de datos SQLite
 const dbPath = path.resolve(__dirname, "Biblioteca.db");
 
-// Crear conexión a la base de datos SQLite
+// Crear conexión a SQLite con manejo de errores
 const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error("❌ Error al conectar a SQLite:", err.message);
   } else {
     console.log("✅ Conexión a SQLite exitosa");
+    
+    // Habilitar claves foráneas en SQLite
+    db.run("PRAGMA foreign_keys = ON;", (err) => {
+      if (err) {
+        console.error("⚠️ Error al habilitar claves foráneas:", err.message);
+      }
+    });
   }
 });
 
-// Promisify db operations for easier async/await usage
+// Convertir funciones SQLite a Promesas
 const dbRun = (query, params = []) => {
   return new Promise((resolve, reject) => {
     db.run(query, params, function (err) {
-      if (err) reject(err);
-      else resolve(this);
+      if (err) {
+        console.error("❌ Error en dbRun:", err.message);
+        reject(err);
+      } else {
+        resolve(this);
+      }
     });
   });
 };
@@ -26,8 +37,12 @@ const dbRun = (query, params = []) => {
 const dbAll = (query, params = []) => {
   return new Promise((resolve, reject) => {
     db.all(query, params, (err, rows) => {
-      if (err) reject(err);
-      else resolve(rows);
+      if (err) {
+        console.error("❌ Error en dbAll:", err.message);
+        reject(err);
+      } else {
+        resolve(rows);
+      }
     });
   });
 };
@@ -35,10 +50,26 @@ const dbAll = (query, params = []) => {
 const dbGet = (query, params = []) => {
   return new Promise((resolve, reject) => {
     db.get(query, params, (err, row) => {
-      if (err) reject(err);
-      else resolve(row);
+      if (err) {
+        console.error("❌ Error en dbGet:", err.message);
+        reject(err);
+      } else {
+        resolve(row);
+      }
     });
   });
 };
+
+// Cerrar conexión correctamente cuando el proceso termine
+process.on("SIGINT", () => {
+  db.close((err) => {
+    if (err) {
+      console.error("❌ Error al cerrar SQLite:", err.message);
+    } else {
+      console.log("🔌 Conexión a SQLite cerrada");
+    }
+    process.exit(0);
+  });
+});
 
 module.exports = { db, dbRun, dbAll, dbGet };

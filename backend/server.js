@@ -268,8 +268,6 @@ app.post("/devolver/:id", async (req, res) => {
     const libroId = req.params.id;
     const { usuario_id } = req.body; // Se obtiene el usuario desde la solicitud
 
-    // console.log(libroId, usuario_id)
-
     if (!libroId || !usuario_id) {
       return res
         .status(400)
@@ -282,8 +280,6 @@ app.post("/devolver/:id", async (req, res) => {
       return res.status(404).json({ mensaje: "El libro no existe." });
     }
 
-    // console.log(libro)
-
     // 🔹 Verificar si el usuario tiene este libro prestado actualmente
     const prestamo = await dbGet(
       `SELECT * FROM prestamos 
@@ -292,8 +288,6 @@ app.post("/devolver/:id", async (req, res) => {
        AND devuelto = FALSE`,
       [libroId, usuario_id]
     );
-
-    // console.log(prestamo)
 
     if (!prestamo) {
       return res.status(400).json({
@@ -312,7 +306,17 @@ app.post("/devolver/:id", async (req, res) => {
     // 🔹 Hacer que el libro vuelva a estar disponible
     await dbRun(`UPDATE libros SET disponible = 1 WHERE id = ?`, [libroId]);
 
-    res.json({ mensaje: "📚 Libro devuelto exitosamente" });
+    // 🔹 Registrar en la tabla 'lecturas' si aún no está registrado
+    await dbRun(
+      `INSERT INTO lecturas (usuario_id, libro_id) 
+       VALUES (?, ?) 
+       ON CONFLICT(usuario_id, libro_id) DO NOTHING`,
+      [usuario_id, libroId]
+    );
+
+    res.json({
+      mensaje: "📚 Libro devuelto y marcado como leído exitosamente",
+    });
   } catch (error) {
     console.error("❌ Error al devolver libro:", error);
     res
@@ -335,7 +339,7 @@ app.get("/perfil/:id", async (req, res) => {
   try {
     const userId = req.params.id;
 
-    // Consulta principal del usuario
+    // 🔹 Consulta principal del usuario
     const userResult = await dbGet("SELECT * FROM usuarios WHERE id = ?", [
       userId,
     ]);
@@ -344,28 +348,28 @@ app.get("/perfil/:id", async (req, res) => {
       return res.status(404).json({ mensaje: "Usuario no encontrado" });
     }
 
-    // Contar libros prestados
+    // 🔹 Contar libros prestados
     const prestamosResult = await dbGet(
-      "SELECT COUNT(*) as librosPrestados FROM prestamos WHERE usuario_id = ?",
+      "SELECT COUNT(*) as librosPrestados FROM prestamos WHERE usuario_id = ? AND devuelto = FALSE",
       [userId]
     );
 
-    // Contar libros leídos (puedes definir una condición, como si han sido devueltos)
+    // 🔹 Contar libros leídos
     const librosLeidosResult = await dbGet(
       "SELECT COUNT(*) as librosLeidos FROM lecturas WHERE usuario_id = ?",
       [userId]
     );
 
-    // Agregar datos a la respuesta
+    // 🔹 Construir la respuesta
     const userData = {
       ...userResult,
-      librosPrestados: prestamosResult.librosPrestados || 0,
-      librosLeidos: librosLeidosResult.librosLeidos || 0,
+      librosPrestados: prestamosResult ? prestamosResult.librosPrestados : 0,
+      librosLeidos: librosLeidosResult ? librosLeidosResult.librosLeidos : 0,
     };
 
     res.json(userData);
   } catch (error) {
-    console.error("Error al obtener perfil:", error);
+    console.error("❌ Error al obtener perfil:", error);
     res.status(500).json({ mensaje: "Error al obtener perfil" });
   }
 });
@@ -386,6 +390,71 @@ app.put("/libros/:id", async (req, res) => {
   } catch (error) {
     console.error("Error al actualizar libro:", error);
     res.status(500).json({ mensaje: "Error al actualizar libro" });
+  }
+});
+
+app.get("/lecturas/:usuario_id", async (req, res) => {
+  try {
+    const { usuario_id } = req.params;
+
+    // 🔍 Obtener los libros leídos por el usuario
+    const librosLeidos = await dbAll(
+      `SELECT libros.* FROM lecturas 
+       JOIN libros ON lecturas.libro_id = libros.id
+       WHERE lecturas.usuario_id = ?`,
+      [usuario_id]
+    );
+
+    res.json(librosLeidos);
+  } catch (error) {
+    console.error("❌ Error al obtener libros leídos:", error);
+    res.status(500).json({ mensaje: "Error al obtener los libros leídos." });
+  }
+});
+
+app.get("/estadisticas", async (req, res) => {
+  try {
+    // Contar el total de libros
+    const totalLibrosResult = await dbGet(
+      "SELECT COUNT(*) as total FROM libros"
+    );
+    const totalLibros = totalLibrosResult.total || 0;
+
+    // Contar los libros prestados (devuelto = false)
+    const librosPrestadosResult = await dbGet(
+      "SELECT COUNT(*) as prestados FROM prestamos WHERE devuelto = FALSE"
+    );
+    const librosPrestados = librosPrestadosResult.prestados || 0;
+
+    // Libros disponibles (totales - prestados)
+    const librosDisponibles = totalLibros - librosPrestados;
+
+    res.json({
+      totalLibros,
+      librosPrestados,
+      librosDisponibles,
+    });
+  } catch (error) {
+    console.error("Error obteniendo estadísticas:", error);
+    res.status(500).json({ mensaje: "Error obteniendo estadísticas" });
+  }
+});
+
+app.get("/usuarios_estadisticas", async (req, res) => {
+  try {
+    const query = `
+      SELECT 
+      (SELECT COUNT(*) FROM usuarios WHERE bloqueado = 1) AS bloqueados,
+      (SELECT COUNT(*) FROM usuarios WHERE email = 'admin123@gmail.com') AS administradores,
+      (SELECT COUNT(*) FROM usuarios WHERE bloqueado = 0 AND email <> 'admin123@gmail.com') AS activos
+    `;
+
+    const result = await dbGet(query); // Usamos dbGet para obtener UNA SOLA fila
+    // console.log("📊 Estadísticas:", result);
+    res.json(result);
+  } catch (error) {
+    console.error("❌ Error obteniendo estadísticas:", error.message);
+    res.status(500).json({ error: "Error en el servidor" });
   }
 });
 

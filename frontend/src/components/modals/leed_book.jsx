@@ -11,7 +11,13 @@ function LeedBookModal({ isOpen, onClose, onConfirm, bookTitle, bookId }) {
     formState: { errors },
   } = useForm();
 
-  const { user } = useAuthStore(); // ✅ Obtener el usuario autenticado
+  const handleConfirm = (data) => {
+    onConfirm({
+      loanDate: data.loanDate,
+      returnDate: data.returnDate, // Captura la fecha ingresada por el usuario
+      bookId,
+    });
+  };
 
   return (
     <div
@@ -40,7 +46,10 @@ function LeedBookModal({ isOpen, onClose, onConfirm, bookTitle, bookId }) {
           </div>
           <div className="modal-body">
             <h5 className="modal-title">Fecha de Devolución Estimada</h5>
-            <form className="form-leed-book" onSubmit={handleSubmit(onConfirm)}>
+            <form
+              className="form-leed-book"
+              onSubmit={handleSubmit(handleConfirm)}
+            >
               <div className="position-form-books-leed">
                 <label className="form-label">Fecha de Préstamo:</label>
                 <input

@@ -9,8 +9,6 @@ router.post("/", async (req, res) => {
   try {
     const { usuario_id, libro_id, fecha_prestamo, fecha_devolucion } = req.body;
 
-    console.log(fecha_devolucion)
-
     // 🔍 Verificar si el libro tiene un préstamo anterior marcado como devuelto
     const prestamoAnterior = await dbGet(
       "SELECT id FROM prestamos WHERE libro_id = ? AND devuelto = TRUE",
@@ -33,6 +31,12 @@ router.post("/", async (req, res) => {
         mensaje: "Este libro ya está prestado y no ha sido devuelto.",
       });
     }
+
+    // 🔍 Verificar si el usuario tiene este libro marcado como leído y eliminarlo
+    await dbRun("DELETE FROM lecturas WHERE usuario_id = ? AND libro_id = ?", [
+      usuario_id,
+      libro_id,
+    ]);
 
     // ✅ Insertar el nuevo préstamo
     await dbRun(

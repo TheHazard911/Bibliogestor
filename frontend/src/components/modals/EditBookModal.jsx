@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 function EditBookModal({ book, onClose, autores }) {
-  console.log("🟢 Renderizando modal con libro:", book);
+  // console.log("🟢 Renderizando modal con libro:", book);
   if (!book) return null; // Evitar errores si no hay libro seleccionado
 
   const [formData, setFormData] = useState({
