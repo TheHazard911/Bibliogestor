@@ -2,7 +2,6 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import DeleteBookModal from "../components/modals/delete_book";
 import LeedBookModal from "../components/modals/leed_book";
-import EditBookModal from "../components/modals/EditBookModal";
 import useAuthStore from "../store/authstore";
 import { getAutores } from "../services/api";
 // import {isAdmin} from "../store/authstore";
@@ -25,13 +24,9 @@ function Books_information() {
   const { user, isAdmin } = useAuthStore(); // Obtiene el usuario actual
   const [esMiPrestamo, setEsMiPrestamo] = useState(false);
   const [mensajeDevolucion, setMensajeDevolucion] = useState("");
-
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [autores, setAutores] = useState([]);
+  // modal de editar
 
   // 📌 Obtener los detalles del libro desde la API
-
   // 🔄 Definir fetchLibro con useCallback
   const fetchLibro = useCallback(async () => {
     try {
@@ -172,10 +167,8 @@ function Books_information() {
   };
 
   const handleEditClick = (book) => {
-    // console.log("📖 Libro seleccionado para editar:", book);
-    setSelectedBook(book);
-    setIsEditOpen(true);
-    // console.log("🔍 Estado de isEditOpen:", isEditOpen); // 🚀 Depuración
+    setSelectedBook(book); // Guarda el libro seleccionado
+    setIsEditOpen(true);   // Abre la modal
   };
 
   // 📌 Cargar lista de autores al montar el componente
@@ -245,12 +238,6 @@ function Books_information() {
             {isAdmin && (
               <>
                 <button
-                  className="btn btn-color"
-                  onClick={() => handleEditClick(libro)}
-                >
-                  Editar
-                </button>
-                <button
                   id="btn-delete"
                   className="btn btn-color"
                   onClick={() => setDeleteOpen(true)}
@@ -292,13 +279,6 @@ function Books_information() {
         bookId={libro.id}
       />
 
-      {isEditOpen && selectedBook && (
-        <EditBookModal
-          book={selectedBook}
-          autores={autores}
-          onClose={() => setIsEditOpen(false)}
-        />
-      )}
     </div>
   );
 }

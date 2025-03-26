@@ -56,28 +56,29 @@ function Form_recovery() {
   };
 
   return (
-    <div className="form-register">
-      <h2>Recuperar Contraseña</h2>
-
+    <div className="form-recovery">
+      <h2 className="title-form-recovery">Recuperar Contraseña</h2>
       {/* Sección para verificar email */}
       {!emailVerificado ? (
         <form onSubmit={handleSubmit(verificarUsuario)}>
-          <label>Ingresar Correo:</label>
+          <label className="label-recovery">Ingresar Correo:</label>
           <input
+          className="inputs-recovery"
             type="email"
             {...register("email", { required: "El correo es obligatorio" })}
           />
           {errors.email && <p>{errors.email.message}</p>}
-          <button type="submit">Verificar</button>
+          <button className="btn btn-color" type="submit">Verificar</button>
         </form>
       ) : (
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* Pregunta de seguridad (rellena automáticamente) */}
-          <label>Pregunta de Seguridad:</label>
-          <input type="text" disabled {...register("securityQuestion")} />
+          <label className="label-recovery">Pregunta de Seguridad:</label>
+          <input className="inputs-recovery" type="text" disabled {...register("securityQuestion")} />
 
-          <label>Respuesta:</label>
+          <label className="label-recovery">Respuesta:</label>
           <input
+          className="inputs-recovery"
             type="text"
             {...register("securityAnswer", {
               required: "La respuesta es obligatoria",
@@ -85,8 +86,9 @@ function Form_recovery() {
           />
           {errors.securityAnswer && <p>{errors.securityAnswer.message}</p>}
 
-          <label>Nueva Contraseña:</label>
+          <label className="label-recovery">Nueva Contraseña:</label>
           <input
+          className="inputs-recovery"
             type="password"
             {...register("newPassword", {
               required: "La contraseña es obligatoria",
@@ -94,8 +96,9 @@ function Form_recovery() {
           />
           {errors.newPassword && <p>{errors.newPassword.message}</p>}
 
-          <label>Repetir Contraseña:</label>
+          <label className="label-recovery">Repetir Contraseña:</label>
           <input
+          className="inputs-recovery"
             type="password"
             {...register("repeatPassword", {
               required: "Debes repetir la contraseña",
@@ -103,7 +106,7 @@ function Form_recovery() {
           />
           {errors.repeatPassword && <p>{errors.repeatPassword.message}</p>}
 
-          <button type="submit">Cambiar Contraseña</button>
+          <button className="btn btn-color" type="submit">Cambiar Contraseña</button>
         </form>
       )}
     </div>
