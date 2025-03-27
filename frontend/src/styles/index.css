@@ -44,6 +44,7 @@
   --color-text-two: #000;
   --color-lines: #1b3b50;
   --image-login: url("../assets/imgs/Login_background.jpg");
+  --image-view: url("../assets/imgs/background_views.jpg");
 }
 
 /* Reset de CSS predeterminado */
@@ -354,6 +355,43 @@ i {
     margin: 0 3rem;
   }
 }
+.title-form-recovery{
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  font-family: var(--font-titles-h);
+  font-size: 3.5rem;
+}
+.form-recovery{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    margin: 1rem;
+  }
+}
+.label-recovery{
+  font-family: var(--font-components);
+  font-size: 1.2rem;
+  margin: 0;
+  text-shadow: 2px 2px 5px black;
+}
+.inputs-recovery{
+  width: 100%;
+  height: 2.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-text);
+  font-family: var(--font-components);
+  font-size: 1rem;
+  text-align: center;
+  margin: 1rem 0;
+}
 
 /*----------------- dashboard----------------- */
 .dashboard-admin {
@@ -491,6 +529,7 @@ i {
 .view {
   min-width: 100%;
   height: 100%;
+  font-family: var(--font-text-p);
 }
 
 .footer {
@@ -553,7 +592,7 @@ i {
   padding: 0;
   width: 100%;
   min-height: 100vh;
-  font-family: var(--font-text-p);
+  color: black;
 
   h2 {
     margin: 0 auto;
@@ -571,7 +610,6 @@ i {
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: black;
 
   p {
     font-size: 1.5rem;
@@ -1298,9 +1336,29 @@ i {
   z-index: 1001;
   /* display: block !important; Asegurar que se muestra */
 }
+.modal-overlay-new-book{
+  width: 28rem;
+  left: 250px;
+  top: 250px;
+}
+.modal-content-new-book{
+  width: 28rem;
+}
+.title-autor{
+  color: #000;
+  margin: 1rem !important;
+}
 
-
-@media (max-width: 425px) {
+@media (max-width: 768px) {
+  .books-information{
+    flex-direction: column;
+  }
+  .book-actions-content > article{
+    flex-direction: column;
+    p{
+      width: 100%;
+    }
+  }
   .form-login {
     width: 75%;
   }
@@ -1321,6 +1379,12 @@ i {
   .header-title {
     p {
       font-size: 1rem;
+    }
+  }
+  .position-form-books-leed{
+    flex-direction: column;
+    input{
+      width: 100%;
     }
   }
 }

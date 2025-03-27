@@ -1,12 +1,12 @@
-import { useParams } from "react-router-dom";
+import { redirect, useParams } from "react-router-dom";
 import { useState, useEffect, useCallback } from "react";
 import DeleteBookModal from "../components/modals/delete_book";
 import LeedBookModal from "../components/modals/leed_book";
-import EditBookModal from "../components/modals/EditBookModal";
 import useAuthStore from "../store/authstore";
 import { getAutores } from "../services/api";
 // import {isAdmin} from "../store/authstore";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 function Books_information() {
   const {
@@ -16,6 +16,7 @@ function Books_information() {
     setValue, // 🔹 Asegúrate de extraer setValue aquí
     getValues,
   } = useForm();
+  const navigate = useNavigate();
   const { id } = useParams();
   const [libro, setLibro] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -25,13 +26,9 @@ function Books_information() {
   const { user, isAdmin } = useAuthStore(); // Obtiene el usuario actual
   const [esMiPrestamo, setEsMiPrestamo] = useState(false);
   const [mensajeDevolucion, setMensajeDevolucion] = useState("");
-
-  const [selectedBook, setSelectedBook] = useState(null);
-  const [isEditOpen, setIsEditOpen] = useState(false);
-  const [autores, setAutores] = useState([]);
+  // modal de editar
 
   // 📌 Obtener los detalles del libro desde la API
-
   // 🔄 Definir fetchLibro con useCallback
   const fetchLibro = useCallback(async () => {
     try {
@@ -171,22 +168,20 @@ function Books_information() {
     }
   };
 
-  const handleEditClick = (book) => {
-    // console.log("📖 Libro seleccionado para editar:", book);
-    setSelectedBook(book);
-    setIsEditOpen(true);
-    // console.log("🔍 Estado de isEditOpen:", isEditOpen); // 🚀 Depuración
-  };
+  // const handleEditClick = (book) => {
+  //   setSelectedBook(book); // Guarda el libro seleccionado
+  //   setIsEditOpen(true);   // Abre la modal
+  // };
 
-  // 📌 Cargar lista de autores al montar el componente
-  useEffect(() => {
-    const cargarAutores = async () => {
-      const data = await getAutores();
-      setAutores(data);
-      setValue("autor", ""); // Restablece el valor del select al cargar
-    };
-    cargarAutores();
-  }, []);
+  // // 📌 Cargar lista de autores al montar el componente
+  // useEffect(() => {
+  //   const cargarAutores = async () => {
+  //     const data = await getAutores();
+  //     setAutores(data);
+  //     setValue("autor", ""); // Restablece el valor del select al cargar
+  //   };
+  //   cargarAutores();
+  // }, []);
 
   if (isLoading) return <p>Cargando...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -245,12 +240,6 @@ function Books_information() {
             {isAdmin && (
               <>
                 <button
-                  className="btn btn-color"
-                  onClick={() => handleEditClick(libro)}
-                >
-                  Editar
-                </button>
-                <button
                   id="btn-delete"
                   className="btn btn-color"
                   onClick={() => setDeleteOpen(true)}
@@ -280,7 +269,8 @@ function Books_information() {
       <DeleteBookModal
         isOpen={isDeleteOpen}
         onClose={() => setDeleteOpen(false)}
-        onConfirm={() => console.log("Eliminar libro")}
+        onConfirm={() => navigate("/nav/catalogo")}
+        bookId={libro.id} // <-- Asegurar que se pase el ID correcto
         bookTitle={libro.titulo}
       />
       {/* Modal para tomar prestado */}
@@ -291,14 +281,6 @@ function Books_information() {
         bookTitle={libro.titulo}
         bookId={libro.id}
       />
-
-      {isEditOpen && selectedBook && (
-        <EditBookModal
-          book={selectedBook}
-          autores={autores}
-          onClose={() => setIsEditOpen(false)}
-        />
-      )}
     </div>
   );
 }

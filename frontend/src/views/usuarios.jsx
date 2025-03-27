@@ -33,9 +33,25 @@ function Usuarios() {
   };
 
   // Acción cuando se confirma la eliminación
-  const handleDelete = () => {
-    console.log("Usuario eliminado:", selectedUser);
-    closeDeleteModal();
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(
+        `http://localhost:5000/usuarios/${selectedUser.id}`,
+        {
+          method: "DELETE",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Error al eliminar el usuario");
+      }
+
+      // Después de eliminar, actualiza el estado de los usuarios
+      setUsuarios(usuarios.filter((usuario) => usuario.id !== selectedUser.id));
+      closeDeleteModal(); // Cierra la modal después de eliminar
+    } catch (error) {
+      console.error("❌ Error al eliminar el usuario:", error);
+    }
   };
 
   // ✅ Función para obtener usuarios desde la API
@@ -95,13 +111,17 @@ function Usuarios() {
                   <td>{usuario.sanciones}</td>
                   <td>
                     <button
-                      onClick={() => setEditOpen(true)}
+                      onClick={() => {
+                        setSelectedEdit(usuario); // Asigna el usuario a editar
+                        setEditOpen(true); // Abre el modal
+                      }}
                       className="btn btn-primary"
                     >
                       <i className="bi bi-pencil-fill"></i>
                     </button>
+
                     <button
-                      onClick={() => setDeleteOpen(true)}
+                      onClick={() => openDeleteModal(usuario)}
                       className="btn btn-danger"
                     >
                       <i className="bi bi-trash-fill"></i>
@@ -123,16 +143,16 @@ function Usuarios() {
       {/* Modal para eliminar */}
       <DeleteuserModal
         isOpen={isDeleteOpen}
-        onClose={() => setDeleteOpen(false)}
-        onConfirm={() => console.log("Eliminar usuario")}
-        user={selectedUser}
+        onClose={closeDeleteModal}
+        onConfirm={handleDelete}
+        user={selectedUser} // Pasar el usuario seleccionado
       />
 
       {/* Modal para editar */}
       <EdituserModal
-        isOpen={isEditOpen}
-        onClose={() => setEditOpen(false)}
-        user={selectedEdit}
+        isOpen={isEditOpen} // Controla si el modal está abierto
+        onClose={() => setEditOpen(false)} // Cierra el modal
+        user={selectedEdit} // Pasa el usuario a editar
       />
     </div>
   );

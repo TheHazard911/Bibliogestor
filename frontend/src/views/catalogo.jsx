@@ -30,7 +30,7 @@ function Catalogo() {
     <div className="views view-catalogo">
       <h2>Catálogo</h2>
 
-      {/* 📌 Terror */}
+      {/* 📌 Narrativa */}
       <div className="content-catalogo">
         <section className="title-genero">
           <h3>Narrativa</h3>
@@ -42,7 +42,7 @@ function Catalogo() {
         </section>
       </div>
 
-      {/* 📌 Comedia */}
+      {/* 📌 Tragedia */}
       <div className="content-catalogo">
         <section className="title-genero">
           <h3>Tragedia</h3>
@@ -54,17 +54,55 @@ function Catalogo() {
         </section>
       </div>
 
-      {/* 📌 Ficción */}
+      {/* 📌 Terror */}
       <div className="content-catalogo">
         <section className="title-genero">
           <h3>Terror</h3>
         </section>
         <section className="row-cards">
-          {librosPorGenero("ficcion").map((libro) => (
+          {librosPorGenero("Terror").map((libro) => (
             <Cards_books key={libro.id} book={libro} />
           ))}
         </section>
       </div>
+
+      {/* 📌 Fantasia */}
+      <div className="content-catalogo">
+        <section className="title-genero">
+          <h3>Fantasia</h3>
+        </section>
+        <section className="row-cards">
+          {librosPorGenero("Fantasia").map((libro) => (
+            <Cards_books key={libro.id} book={libro} />
+          ))}
+        </section>
+      </div>
+
+      {/* 📌 Aventuras */}
+      <div className="content-catalogo">
+        <section className="title-genero">
+          <h3>Aventuras</h3>
+        </section>
+        <section className="row-cards">
+          {librosPorGenero("Aventuras").map((libro) => (
+            <Cards_books key={libro.id} book={libro} />
+          ))}
+        </section>
+      </div>
+
+      {/* 📌 ciencia ficcion */}
+      <div className="content-catalogo">
+        <section className="title-genero">
+          <h3>Ciencia Ficcion</h3>
+        </section>
+        <section className="row-cards">
+          {librosPorGenero("Ciencia ficción").map((libro) => (
+            <Cards_books key={libro.id} book={libro} />
+          ))}
+        </section>
+      </div>
+
+
     </div>
   );
 }

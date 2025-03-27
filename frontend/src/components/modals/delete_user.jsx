@@ -1,7 +1,25 @@
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Logo from "../../assets/imgs/Logo_BiblioGestor.png";
 
-function DeleteuserModal({ isOpen, onClose, onConfirm }) {
+const ADMIN_KEY = "ADMIN_DELETE"
+
+function DeleteuserModal({ isOpen, onClose, onConfirm, user }) {
+  const [adminKeyInput, setAdminKeyInput] = useState(""); // Estado para la clave ingresada
+  const [error, setError] = useState(""); // Estado para errores
+
+  const handleDelete = () => {
+
+    if (adminKeyInput !== ADMIN_KEY) {
+      setError("Clave incorrecta. Inténtalo de nuevo.");
+      return;
+    }
+
+    if (user) {
+      onConfirm(); // Llama la función onConfirm pasada como prop
+    }
+  };
+
   return (
     <div
       className={`modal fade ${isOpen ? "show d-block" : ""}`}
@@ -27,32 +45,28 @@ function DeleteuserModal({ isOpen, onClose, onConfirm }) {
           </div>
           <div className="modal-body">
             <p>
-              ¿Estás seguro de que deseas eliminar el usuario?
+              ¿Estás seguro de que deseas eliminar el usuario {user?.nombre} {user?.apellidos}?
             </p>
             <form className="form-leed-book">
               <div className="position-form-books-leed">
-                <label className="form-label labels-form-book">
-                  ADMIN KEY:
-                </label>
+                <label className="form-label labels-form-book">ADMIN KEY:</label>
                 <input
                   placeholder="ADMIN KEY"
                   type="password"
                   className="form-control inputs-form-book"
-                  id=""
-                  aria-describedby=""
+                  value={adminKeyInput}
+                  onChange={(e) => setAdminKeyInput(e.target.value)}
                 />
+                 {error && <p style={{ color: "red", marginTop: "5px" }}>{error}</p>}
               </div>
             </form>
-            <p>NOTA: La accion no tiene reversion.</p>
+            <p>NOTA: La acción no tiene reversión.</p>
           </div>
           <div className="modal-footer">
             <button
               type="button"
               className="btn btn-color-small"
-              onClick={() => {
-                onConfirm();
-                onClose();
-              }}
+              onClick={handleDelete}
             >
               Sí, Eliminar
             </button>
@@ -70,12 +84,11 @@ function DeleteuserModal({ isOpen, onClose, onConfirm }) {
   );
 }
 
-// Validación de props con PropTypes
 DeleteuserModal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   onConfirm: PropTypes.func.isRequired,
-  bookTitle: PropTypes.string.isRequired
+  user: PropTypes.object,
 };
 
 export default DeleteuserModal;

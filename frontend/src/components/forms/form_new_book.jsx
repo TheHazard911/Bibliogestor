@@ -225,10 +225,10 @@ function Form_new_book() {
 
       {/* 📌 Modal para agregar un nuevo autor */}
       {modalOpen && (
-        <div className="modal-overlay">
-          <div className="modal-content">
+        <div className="modal-overlay modal-overlay-new-book">
+          <div className="modal-content modal-content-new-book">
             <form onSubmit={handleAddAutor}>
-              <h2>Agregar Nuevo Autor</h2>
+              <h2 className="title-autor">Agregar Nuevo Autor</h2>
               <input
                 type="text"
                 className="form-control"

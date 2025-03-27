@@ -458,6 +458,27 @@ app.get("/usuarios_estadisticas", async (req, res) => {
   }
 });
 
+// Ruta para eliminar usuario
+app.delete("/usuarios/:id", async (req, res) => {
+  const { id } = req.params;  // Obtener el ID del usuario desde la URL
+
+  try {
+    // Verificar si el usuario existe
+    const user = await dbGet("SELECT * FROM usuarios WHERE id = ?", [id]);
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    // Eliminar usuario
+    await dbRun("DELETE FROM usuarios WHERE id = ?", [id]);
+
+    res.status(200).json({ message: "Usuario eliminado exitosamente" });
+  } catch (error) {
+    console.error("❌ Error al eliminar el usuario:", error.message);
+    res.status(500).json({ message: "Error al eliminar el usuario", error: error.message });
+  }
+});
+
 // ✅ Iniciar servidor
 app.listen(PORT, () => {
   console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`);

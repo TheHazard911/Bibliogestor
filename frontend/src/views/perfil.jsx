@@ -102,8 +102,8 @@ function Perfil() {
         </div>
         <br />
         <br />
-        <div className="btn btn-color">Eliminar cuenta</div>
-        <div className="btn btn-color">Editar Datos</div>
+        {/* <div className="btn btn-color">Eliminar cuenta</div>
+        <div className="btn btn-color">Editar Datos</div> */}
         <br />
         <br />
       </div>
